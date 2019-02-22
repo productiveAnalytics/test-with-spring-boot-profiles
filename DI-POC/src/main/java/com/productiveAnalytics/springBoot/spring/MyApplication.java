@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import com.productiveAnalytics.springBoot.di.Node;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.changehealthcare.imn.di")
+@ComponentScan(basePackages = "com.productiveAnalytics.springBoot")
 public class MyApplication 
 			 implements CommandLineRunner, InitializingBean
 {
@@ -19,7 +20,12 @@ public class MyApplication
 	private Node node;
 	
 	public static void main(String[] args) {
-		SpringApplication.run(MyApplication.class, args);
+		ApplicationContext appCtx = SpringApplication.run(MyApplication.class, args);
+		
+		int beanIndex=0;
+		for (String beanName : appCtx.getBeanDefinitionNames()) {
+			System.out.println(String.format("Bean[%d] = %s", beanIndex, beanName));
+		}
 	}
 
 	@Override
